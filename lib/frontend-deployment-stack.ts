@@ -59,7 +59,7 @@ export class FrontendDeploymentStack extends cdk.Stack {
           }
         },
         artifacts: {
-          'base-directory': './dist',   ///outputting our generated Gatsby Build files to the public directory
+          'base-directory': './dist',  
           "files": [
             '**/*'
           ]
@@ -76,7 +76,9 @@ export class FrontendDeploymentStack extends cdk.Stack {
 
     s3Build.addToRolePolicy(policy);
 
-    const pipeline = new CodePipeline.Pipeline(this, 'frontend-pipeline');
+    const pipeline = new CodePipeline.Pipeline(this, 'frontend-pipeline', {
+      crossAccountKeys: false, 
+    });
 
         //First Stage Source
         pipeline.addStage({
